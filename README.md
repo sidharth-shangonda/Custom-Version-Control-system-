@@ -99,6 +99,7 @@ Create `backend-main/.env` with the backend configuration:
 PORT=3002
 MONGODB_URI=your_mongodb_connection_string
 JWT_SECRET_KEY=your_jwt_secret
+S3_BUCKET=your_s3_bucket_name
 ```
 
 The frontend currently calls the backend at `http://localhost:3002`, so use `PORT=3002` for local development unless you also update the frontend API URLs.
@@ -111,7 +112,7 @@ AWS_SECRET_ACCESS_KEY=your_secret_key
 AWS_REGION=ap-south-1
 ```
 
-Also update `backend-main/config/aws-config.js` with your S3 bucket name before using `push` or `pull`.
+The CLI commands will automatically read the `S3_BUCKET` variable from the environment or default to the config fallback in `backend-main/config/aws-config.js`.
 
 ## Installation
 
@@ -259,10 +260,11 @@ Starts the Express server through the `start` CLI command.
 Frontend:
 
 ```bash
-npm run dev
-npm run build
-npm run lint
-npm run preview
+npm run dev      # Starts the Vite development server (usually at http://localhost:5173)
+npm test         # Runs frontend unit/integration tests with Vitest
+npm run build    # Compiles the production build
+npm run lint     # Runs ESLint to check for code quality and style errors
+npm run preview  # Previews the production build locally
 ```
 
 ## Development Notes
