@@ -1,105 +1,266 @@
-.profile-page-wrapper {
-  display: flex;
-  min-height: 100vh;
-  color: whitesmoke;
+.profile-wrapper {
   width: 100%;
-  /* flex-wrap: wrap; */
+  min-height: calc(100vh - 60px);
+  background-color: var(--bg-primary);
+  padding: 2.5rem 1.5rem;
 }
 
-.user-profile-section {
-  width: 250px;
-  /* min-height: 100vh; */
+.profile-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 2.5rem;
+  align-items: start;
+}
+
+/* Left Column: User Profile Card */
+.profile-left-column {
   display: flex;
   flex-direction: column;
-  padding: 40px 10px;
 }
 
-.user-repo-section {
-  margin: 0px auto;
+.profile-user-card {
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 2rem 1.5rem;
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  box-shadow: var(--card-shadow);
 }
 
-.user-name {
-  /* width: 250px; */
-  margin: 10px 20px 10px 10px;
-  /* margin: 10px auto; */
-}
-
-.profile-image {
-  margin: 10px auto;
-  width: 100px;
-  height: 100px;
+.profile-user-avatar {
+  width: 120px;
+  height: 120px;
   border-radius: 50%;
-  background-color: grey;
-}
-
-.follow-btn {
-  background-color: #20272d;
-  width: 250px;
-  margin: 10px auto;
-  height: 40px;
-  border-radius: 10px;
-  color: whitesmoke;
-}
-
-.follower {
+  background: linear-gradient(135deg, var(--accent-blue), #6366f1);
+  color: var(--bg-primary);
+  font-size: 2.5rem;
+  font-weight: 800;
   display: flex;
+  align-items: center;
   justify-content: center;
-  width: 250px;
-  height: 30px;
-  gap: 10px;
-  margin: 10px auto;
+  margin-bottom: 1.25rem;
+  box-shadow: 0 10px 25px -5px rgba(56, 189, 248, 0.4);
 }
 
-.repo-card-wrapper {
-  margin: 0 auto;
+.profile-username {
+  font-size: 1.5rem;
+  font-weight: 800;
+  margin-bottom: 0.25rem;
+}
+
+.profile-email {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin-bottom: 1.25rem;
+}
+
+.profile-user-bio {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin-bottom: 1.5rem;
+}
+
+.btn-edit-profile {
   width: 100%;
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 20px;
-  padding: 40px 20px;
+  margin-bottom: 1.25rem;
+  background-color: transparent;
+  border-color: var(--border-color);
 }
 
-.repo {
-  border: 0.5px solid grey;
-  border-radius: 10px;
-  width: 400px;
-  height: 210px;
-  padding: 20px 10px;
+.btn-edit-profile:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+  border-color: var(--text-secondary);
+}
+
+.profile-followers-stats {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border-color);
+  width: 100%;
+}
+
+.followers-count strong {
+  color: var(--text-primary);
+}
+
+.btn-logout {
+  width: 100%;
+  background-color: rgba(239, 68, 68, 0.1);
+  color: #ef4444;
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem;
+}
+
+.btn-logout:hover {
+  background-color: #ef4444;
+  color: var(--text-primary);
+  border-color: #ef4444;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2);
+}
+
+/* Right Column Style */
+.profile-right-column {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* Heatmap container */
+.profile-heatmap-card {
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: var(--card-shadow);
+  overflow-x: auto;
+}
+
+.profile-heatmap-card h4 {
+  margin-bottom: 1rem;
+  font-size: 1.05rem;
+  color: var(--text-primary);
+}
+
+/* Repositories Overview */
+.profile-repos-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.profile-section-title {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.profile-section-title h3 {
+  font-size: 1.25rem;
+}
+
+.repo-count-badge {
+  font-size: 0.75rem;
+  font-weight: 700;
+  background-color: var(--bg-secondary);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-color);
+  padding: 0.15rem 0.5rem;
+  border-radius: 20px;
+}
+
+.profile-repos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 1.25rem;
+}
+
+.profile-repo-card {
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 1.25rem;
+  min-height: 150px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  box-shadow: var(--card-shadow);
+  transition: all 0.25s ease;
 }
 
-.repo-name {
-  cursor: pointer;
-  color: #408ced;
-  font-size: 20px;
+.profile-repo-card:hover {
+  border-color: rgba(56, 189, 248, 0.3);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 24px -10px rgba(0, 0, 0, 0.6);
 }
 
-.description {
-  color: grey;
-  font-size: 15px;
+.profile-repo-card-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
-@media screen and (max-width: 750px) {
-  .repo {
+.profile-repo-name {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--accent-blue);
+  flex-grow: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.profile-repo-desc {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin: 0.75rem 0 1.25rem;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.profile-repo-footer {
+  display: flex;
+  gap: 0.75rem;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.profile-loading {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 2rem;
+  justify-content: center;
+  color: var(--text-secondary);
+}
+
+.profile-empty-repos {
+  background-color: var(--bg-secondary);
+  border: 1px dashed var(--border-color);
+  border-radius: 12px;
+  padding: 3rem;
+  text-align: center;
+  color: var(--text-secondary);
+}
+
+/* Responsive grid layout */
+@media (max-width: 900px) {
+  .profile-container {
+    grid-template-columns: 1fr;
+  }
+  .profile-left-column {
     width: 100%;
   }
 }
 
-@media screen and (max-width: 570px) {
-  .user-profile-section {
-    margin: auto;
+@media (max-width: 480px) {
+  .profile-repos-grid {
+    grid-template-columns: 1fr;
   }
-
-  .profile-page-wrapper {
-    display: block;
+  .profile-followers-stats {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
   }
 }
 
-#logout:hover {
-  border: 1px solid white;
-}
