@@ -1,104 +1,116 @@
-import React, { useState, useEffect } from "react";
+import { useState } from "react";
 import axios from "axios";
-import { useAuth } from "../../authContext";
-
-import { PageHeader } from "@primer/react/drafts";
-import { Box, Button } from "@primer/react";
-import "./auth.css";
-
-import logo from "../../assets/github-mark-white.svg";
 import { Link } from "react-router-dom";
+import { useAuth } from "../../authContext";
+import "./auth.css";
+import logo from "../../assets/github-mark-white.svg";
 
 const Login = () => {
-  // useEffect(() => {
-  //   localStorage.removeItem("token");
-  //   localStorage.removeItem("userId");
-  //   setCurrentUser(null);
-  // });
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
   const { setCurrentUser } = useAuth();
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    if (!email.trim() || !password.trim()) {
+      setError("Please fill out all fields.");
+      return;
+    }
 
     try {
       setLoading(true);
+      setError("");
+      
       const res = await axios.post("http://localhost:3002/login", {
-        email: email,
+        email: email.trim(),
         password: password,
       });
 
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("userId", res.data.userId);
-
       setCurrentUser(res.data.userId);
-      setLoading(false);
 
       window.location.href = "/";
     } catch (err) {
       console.error(err);
-      alert("Login Failed!");
+      setError(err.response?.data?.error || "Invalid email or password.");
+    } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="login-wrapper">
-      <div className="login-logo-container">
-        <img className="logo-login" src={logo} alt="Logo" />
-      </div>
-
-      <div className="login-box-wrapper">
-        <div className="login-heading">
-          <Box sx={{ padding: 1 }}>
-            <PageHeader>
-              <PageHeader.TitleArea variant="large">
-                <PageHeader.Title>Sign In</PageHeader.Title>
-              </PageHeader.TitleArea>
-            </PageHeader>
-          </Box>
+    <div className="auth-wrapper">
+      <div className="auth-card-container">
+        <div className="auth-logo-wrapper">
+          <img className="auth-logo" src={logo} alt="GitHub Logo" />
         </div>
-        <div className="login-box">
-          <div>
-            <label className="label">Email address</label>
-            <input
-              autoComplete="off"
-              name="Email"
-              id="Email"
-              className="input"
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </div>
-          <div className="div">
-            <label className="label">Password</label>
-            <input
-              autoComplete="off"
-              name="Password"
-              id="Password"
-              className="input"
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </div>
 
-          <Button
-            variant="primary"
-            className="login-btn"
-            disabled={loading}
-            onClick={handleLogin}
-          >
-            {loading ? "Loading..." : "Login"}
-          </Button>
+        <h2 className="auth-title">Sign in to ApnaGit</h2>
+
+        {error && <div className="auth-error-banner">{error}</div>}
+
+        <div className="auth-card">
+          <form onSubmit={handleLogin} className="auth-form">
+            <div className="auth-form-group">
+              <label className="auth-label" htmlFor="email-input">Email address</label>
+              <input
+                id="email-input"
+                autoComplete="email"
+                className="auth-input"
+                type="email"
+                value={email}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                  if (error) setError("");
+                }}
+                disabled={loading}
+                required
+              />
+            </div>
+            
+            <div className="auth-form-group">
+              <div className="auth-label-row">
+                <label className="auth-label" htmlFor="password-input">Password</label>
+                <a href="#forgot" className="auth-link-forgot" onClick={(e) => e.preventDefault()}>Forgot password?</a>
+              </div>
+              <input
+                id="password-input"
+                autoComplete="current-password"
+                className="auth-input"
+                type="password"
+                value={password}
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                  if (error) setError("");
+                }}
+                disabled={loading}
+                required
+              />
+            </div>
+
+            <button
+              type="submit"
+              className="btn-auth-submit"
+              disabled={loading}
+            >
+              {loading ? (
+                <>
+                  <span className="spinner-small"></span>
+                  Signing in...
+                </>
+              ) : (
+                "Sign In"
+              )}
+            </button>
+          </form>
         </div>
-        <div className="pass-box">
+
+        <div className="auth-redirect-box">
           <p>
-            New to GitHub? <Link to="/signup">Create an account</Link>
+            New to ApnaGit? <Link to="/signup" className="auth-link">Create an account</Link>
           </p>
         </div>
       </div>
