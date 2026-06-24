@@ -1,28 +1,33 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import logo from "../assets/github-mark-white.svg";
 import "./navbar.css";
 
 const Navbar = () => {
+  const location = useLocation();
+
   return (
-    <nav>
-      <Link to="/">
-        <div>
-          <img
-            src="https://www.github.com/images/modules/logos_page/GitHub-Mark.png"
-            alt="GitHub Logo"
-          />
-          <h3>GitHub</h3>
-        </div>
-      </Link>
-      <div>
-        <Link to="/create">
-          <p>Create a Repository</p>
+    <header className="navbar-header">
+      <div className="navbar-container">
+        <Link to="/" className="navbar-brand">
+          <img src={logo} alt="GitHub Logo" className="navbar-logo" />
+          <span className="navbar-title">ApnaGit</span>
         </Link>
-        <Link to="/profile">
-          <p>Profile</p>
-        </Link>
+        <nav className="navbar-links">
+          <Link 
+            to="/create" 
+            className={`navbar-link ${location.pathname === "/create" ? "active" : ""}`}
+          >
+            Create Repository
+          </Link>
+          <Link 
+            to="/profile" 
+            className={`navbar-link ${location.pathname === "/profile" ? "active" : ""}`}
+          >
+            Profile
+          </Link>
+        </nav>
       </div>
-    </nav>
+    </header>
   );
 };
 
