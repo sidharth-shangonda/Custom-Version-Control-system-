@@ -46,6 +46,12 @@
   justify-content: center;
   margin-bottom: 1rem;
   box-shadow: 0 4px 12px rgba(56, 189, 248, 0.3);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.profile-card-avatar:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(56, 189, 248, 0.6);
 }
 
 .profile-card-info h3 {

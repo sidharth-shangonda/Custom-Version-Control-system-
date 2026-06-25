@@ -45,6 +45,12 @@
   justify-content: center;
   margin-bottom: 1.25rem;
   box-shadow: 0 10px 25px -5px rgba(56, 189, 248, 0.4);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.profile-user-avatar:hover {
+  transform: scale(1.05) rotate(5deg);
+  box-shadow: 0 15px 35px -5px rgba(56, 189, 248, 0.7);
 }
 
 .profile-username {
