@@ -58,7 +58,19 @@ const CreateRepository = () => {
             <p>A repository contains all project files, including the revision history.</p>
           </div>
 
-          {error && <div className="error-banner">{error}</div>}
+          {error && (
+            <div className="error-banner">
+              <span>{error}</span>
+              <button
+                type="button"
+                className="banner-close-btn"
+                onClick={() => setError("")}
+                title="Dismiss error"
+              >
+                &times;
+              </button>
+            </div>
+          )}
           {success && (
             <div className="success-banner">
               <svg width="18" height="18" viewBox="0 0 16 16" fill="currentColor">
