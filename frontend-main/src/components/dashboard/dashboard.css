@@ -134,16 +134,40 @@
   align-items: center;
 }
 
-.search-box svg {
+.search-icon {
   position: absolute;
   left: 1rem;
   color: var(--text-muted);
+  pointer-events: none;
 }
 
 .search-box input {
   padding-left: 2.75rem;
+  padding-right: 2.5rem;
   width: 280px;
   background-color: var(--bg-secondary);
+}
+
+.search-clear-btn {
+  position: absolute;
+  right: 0.75rem;
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 1.25rem;
+  cursor: pointer;
+  padding: 0.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s ease;
+  line-height: 1;
+}
+
+.search-clear-btn:hover {
+  color: var(--text-primary);
+  background: transparent;
+  transform: none;
 }
 
 .repos-grid {

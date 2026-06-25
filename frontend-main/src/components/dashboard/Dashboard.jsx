@@ -96,7 +96,7 @@ const Dashboard = () => {
             <div className="dashboard-section-header">
               <h2>Your Repositories</h2>
               <div className="search-box">
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2" className="search-icon">
                   <circle cx="7" cy="7" r="5" />
                   <path d="M11 11l4 4" />
                 </svg>
@@ -106,6 +106,16 @@ const Dashboard = () => {
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                 />
+                {searchQuery && (
+                  <button
+                    type="button"
+                    className="search-clear-btn"
+                    onClick={() => setSearchQuery("")}
+                    title="Clear filter"
+                  >
+                    &times;
+                  </button>
+                )}
               </div>
             </div>
 
