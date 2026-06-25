@@ -270,3 +270,20 @@
   }
 }
 
+.heatmap-header {
+  margin-bottom: 1.25rem;
+}
+
+.heatmap-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.25rem;
+}
+
+.heatmap-subtitle {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+

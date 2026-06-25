@@ -48,8 +48,11 @@ const HeatMapProfile = () => {
   }, []);
 
   return (
-    <div>
-      <h4>Recent Contributions</h4>
+    <div className="heatmap-wrapper-inner">
+      <div className="heatmap-header">
+        <h4 className="heatmap-title">Recent Contributions</h4>
+        <p className="heatmap-subtitle">Your local repository commits tracked over time</p>
+      </div>
       <HeatMap
         className="HeatMapProfile"
         style={{ maxWidth: "700px", height: "200px", color: "white" }}
