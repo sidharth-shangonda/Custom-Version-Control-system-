@@ -275,9 +275,4 @@ npm run preview  # Previews the production build locally
 - The S3 bucket name is currently configured in `backend-main/config/aws-config.js`.
 - The CLI custom version control commands operate on the current working directory, not automatically on the project root.
 
-## Troubleshooting
 
-- If the frontend cannot load repositories, confirm the backend is running on `http://localhost:3002`.
-- If signup or login fails, verify `MONGODB_URI` and `JWT_SECRET_KEY` are present in `backend-main/.env`.
-- If S3 push or pull fails, confirm AWS credentials, region, and bucket name are configured.
-- If the dashboard redirects to login, clear `localStorage` and sign in again.
