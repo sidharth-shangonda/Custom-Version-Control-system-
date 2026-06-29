@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import Navbar from "../Navbar";
+import Toast from "../common/Toast";
 import "./repoDetail.css";
 
 const RepoDetail = () => {
@@ -11,6 +12,9 @@ const RepoDetail = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [activeTab, setActiveTab] = useState("files");
+
+  const [toastMsg, setToastMsg] = useState("");
+  const [toastType, setToastType] = useState("success");
 
   const [issueTitle, setIssueTitle] = useState("");
   const [issueDescription, setIssueDescription] = useState("");
@@ -65,9 +69,13 @@ const RepoDetail = () => {
       // Reset form
       setIssueTitle("");
       setIssueDescription("");
+      setToastMsg("Issue created successfully!");
+      setToastType("success");
     } catch (err) {
       console.error("Error creating issue:", err);
       setIssueError("Failed to create issue. Please try again.");
+      setToastMsg("Failed to create issue.");
+      setToastType("error");
     } finally {
       setCreatingIssue(false);
     }
@@ -246,6 +254,7 @@ const RepoDetail = () => {
                   </div>
                 )}
               </div>
+              {toastMsg && <Toast message={toastMsg} type={toastType} onClose={() => setToastMsg("")} />}
             </>
           )}
         </div>
