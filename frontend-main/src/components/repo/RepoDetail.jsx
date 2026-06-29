@@ -12,6 +12,11 @@ const RepoDetail = () => {
   const [error, setError] = useState("");
   const [activeTab, setActiveTab] = useState("files");
 
+  const [issueTitle, setIssueTitle] = useState("");
+  const [issueDescription, setIssueDescription] = useState("");
+  const [creatingIssue, setCreatingIssue] = useState(false);
+  const [issueError, setIssueError] = useState("");
+
   useEffect(() => {
     const fetchRepoDetails = async () => {
       try {
@@ -35,6 +40,38 @@ const RepoDetail = () => {
       fetchRepoDetails();
     }
   }, [id]);
+
+  const handleCreateIssue = async (e) => {
+    e.preventDefault();
+    if (!issueTitle.trim() || !issueDescription.trim()) {
+      setIssueError("Please enter both a title and description.");
+      return;
+    }
+
+    try {
+      setCreatingIssue(true);
+      setIssueError("");
+      const response = await axios.post(`http://localhost:3002/issue/create/${id}`, {
+        title: issueTitle.trim(),
+        description: issueDescription.trim()
+      });
+      
+      // Update local issues state
+      setRepo(prev => ({
+        ...prev,
+        issues: [...(prev.issues || []), response.data]
+      }));
+
+      // Reset form
+      setIssueTitle("");
+      setIssueDescription("");
+    } catch (err) {
+      console.error("Error creating issue:", err);
+      setIssueError("Failed to create issue. Please try again.");
+    } finally {
+      setCreatingIssue(false);
+    }
+  };
 
   return (
     <>
@@ -131,32 +168,81 @@ const RepoDetail = () => {
                   </div>
                 {activeTab === "issues" && (
                   <div className="repo-issues-section">
-                    {repo.issues && repo.issues.length > 0 ? (
-                      <div className="issues-list">
-                        {repo.issues.map((issue) => (
-                          <div key={issue._id} className="issue-item">
-                            <div className="issue-item-main">
-                              <span className={`issue-status-dot ${issue.status}`}></span>
-                              <div className="issue-content-wrapper">
-                                <h4 className="issue-title">{issue.title}</h4>
-                                <p className="issue-desc">{issue.description}</p>
+                    <div className="issues-grid-layout">
+                      {/* Left: Issues List */}
+                      <div className="issues-left-col">
+                        {repo.issues && repo.issues.length > 0 ? (
+                          <div className="issues-list">
+                            {repo.issues.map((issue) => (
+                              <div key={issue._id} className="issue-item">
+                                <div className="issue-item-main">
+                                  <span className={`issue-status-dot ${issue.status}`}></span>
+                                  <div className="issue-content-wrapper">
+                                    <h4 className="issue-title">{issue.title}</h4>
+                                    <p className="issue-desc">{issue.description}</p>
+                                  </div>
+                                </div>
+                                <span className={`issue-status-badge ${issue.status}`}>
+                                  {issue.status}
+                                </span>
                               </div>
-                            </div>
-                            <span className={`issue-status-badge ${issue.status}`}>
-                              {issue.status}
-                            </span>
+                            ))}
                           </div>
-                        ))}
+                        ) : (
+                          <div className="empty-issues-state">
+                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="empty-icon">
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938-4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 12c-.77 1.333.192 3 1.732 3z" />
+                            </svg>
+                            <h4>No issues reported yet</h4>
+                            <p>Bugs, feature requests, and feedback can be tracked here.</p>
+                          </div>
+                        )}
                       </div>
-                    ) : (
-                      <div className="empty-issues-state">
-                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="empty-icon">
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938-4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 12c-.77 1.333.192 3 1.732 3z" />
-                        </svg>
-                        <h4>No issues reported yet</h4>
-                        <p>Bugs, feature requests, and feedback can be tracked here.</p>
+
+                      {/* Right: New Issue Form */}
+                      <div className="issues-right-col">
+                        <div className="new-issue-card">
+                          <h3>New Issue</h3>
+                          {issueError && <div className="issue-error-message">{issueError}</div>}
+                          <form onSubmit={handleCreateIssue} className="new-issue-form">
+                            <div className="form-group">
+                              <label htmlFor="issue-title-input">Title</label>
+                              <input
+                                type="text"
+                                id="issue-title-input"
+                                placeholder="What is the problem?"
+                                value={issueTitle}
+                                onChange={(e) => {
+                                  setIssueTitle(e.target.value);
+                                  if (issueError) setIssueError("");
+                                }}
+                                disabled={creatingIssue}
+                                required
+                              />
+                            </div>
+                            <div className="form-group">
+                              <label htmlFor="issue-desc-input">Description</label>
+                              <textarea
+                                id="issue-desc-input"
+                                placeholder="Describe the issue in detail..."
+                                value={issueDescription}
+                                onChange={(e) => setIssueDescription(e.target.value)}
+                                disabled={creatingIssue}
+                                rows={4}
+                                required
+                              />
+                            </div>
+                            <button
+                              type="submit"
+                              className="btn-submit-issue"
+                              disabled={creatingIssue}
+                            >
+                              {creatingIssue ? "Submitting..." : "Submit new issue"}
+                            </button>
+                          </form>
+                        </div>
                       </div>
-                    )}
+                    </div>
                   </div>
                 )}
               </div>
