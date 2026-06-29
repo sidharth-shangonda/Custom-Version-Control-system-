@@ -129,6 +129,35 @@ const RepoDetail = () => {
                       </div>
                     )}
                   </div>
+                {activeTab === "issues" && (
+                  <div className="repo-issues-section">
+                    {repo.issues && repo.issues.length > 0 ? (
+                      <div className="issues-list">
+                        {repo.issues.map((issue) => (
+                          <div key={issue._id} className="issue-item">
+                            <div className="issue-item-main">
+                              <span className={`issue-status-dot ${issue.status}`}></span>
+                              <div className="issue-content-wrapper">
+                                <h4 className="issue-title">{issue.title}</h4>
+                                <p className="issue-desc">{issue.description}</p>
+                              </div>
+                            </div>
+                            <span className={`issue-status-badge ${issue.status}`}>
+                              {issue.status}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                    ) : (
+                      <div className="empty-issues-state">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="empty-icon">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938-4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 12c-.77 1.333.192 3 1.732 3z" />
+                        </svg>
+                        <h4>No issues reported yet</h4>
+                        <p>Bugs, feature requests, and feedback can be tracked here.</p>
+                      </div>
+                    )}
+                  </div>
                 )}
               </div>
             </>
