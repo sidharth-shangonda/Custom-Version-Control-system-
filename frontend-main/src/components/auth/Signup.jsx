@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../authContext";
@@ -50,7 +50,7 @@ const Signup = () => {
           <img className="auth-logo" src={logo} alt="GitHub Logo" />
         </div>
 
-        <h2 className="auth-title">Join ApnaGit</h2>
+        <h2 className="auth-title">Join MiniGit</h2>
 
         {error && <div className="auth-error-banner">{error}</div>}
 

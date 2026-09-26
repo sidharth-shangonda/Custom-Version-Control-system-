@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../Navbar";
@@ -15,10 +15,22 @@ const CreateRepository = () => {
 
   const userId = localStorage.getItem("userId");
 
+  React.useEffect(() => {
+    if (!userId) {
+      navigate("/auth");
+    }
+  }, [userId, navigate]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!name.trim()) {
       setError("Repository name is required.");
+      return;
+    }
+
+    if (!userId) {
+      setError("Please sign in to create a repository.");
+      setTimeout(() => navigate("/auth"), 1500);
       return;
     }
 
@@ -42,7 +54,14 @@ const CreateRepository = () => {
       }, 1500);
     } catch (err) {
       console.error(err);
-      setError(err.response?.data?.error || "Failed to create repository. Make sure name is unique.");
+      if (err.response?.data?.error === "Invalid User ID!") {
+        localStorage.removeItem("token");
+        localStorage.removeItem("userId");
+        setError("Your session has expired or is invalid. Redirecting to login...");
+        setTimeout(() => navigate("/auth"), 1500);
+      } else {
+        setError(err.response?.data?.error || "Failed to create repository. Make sure name is unique.");
+      }
     } finally {
       setLoading(false);
     }

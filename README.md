@@ -1,6 +1,6 @@
-# GitHub Clone with Custom Version Control
+# MiniGit — Custom Version Control Platform
 
-A MERN stack GitHub-style application with a custom version control layer built from scratch. The project combines a React frontend, an Express and MongoDB backend, repository and issue APIs, user authentication, and a CLI that stores commits locally before syncing them to AWS S3.
+A MERN stack GitHub-style application with a custom version control layer built from scratch (`.miniGit`). The project combines a React frontend, an Express and MongoDB backend, repository and issue APIs, user authentication, and a CLI that stores commits locally before syncing them to AWS S3.
 
 ## Project Overview
 
@@ -9,7 +9,7 @@ This repository is split into two main applications:
 - `frontend-main`: A Vite and React client that provides authentication, dashboard, repository search, suggested repositories, and profile pages.
 - `backend-main`: An Express server that exposes user, repository, and issue APIs, connects to MongoDB, and includes custom version control commands.
 
-The custom version control system creates a hidden `.apnaGit` directory inside the working folder where commands are run. Files can be staged, committed into UUID-based commit folders, pushed to S3, pulled back from S3, and restored by commit ID.
+The custom version control system creates a hidden `.miniGit` directory inside the working folder where commands are run. Files can be staged, committed into UUID-based commit folders, pushed to S3, pulled back from S3, and restored by commit ID.
 
 ## Features
 
@@ -62,6 +62,8 @@ The custom version control system creates a hidden `.apnaGit` directory inside t
 |   |   |-- repoController.js
 |   |   |-- revert.js
 |   |   `-- userController.js
+|   |-- middleware
+|   |   `-- authMiddleware.js
 |   |-- models
 |   |   |-- issueModel.js
 |   |   |-- repoModel.js
@@ -195,25 +197,25 @@ Open the Vite URL shown in the terminal, usually `http://localhost:5173`.
 
 ## Custom Version Control CLI
 
-Run these commands from the directory where you want the `.apnaGit` repository to exist.
+Run these commands from the directory where you want the `.miniGit` repository to exist.
 
 ```bash
 node backend-main/index.js init
 ```
 
-Creates `.apnaGit`, a `commits` directory, and a config file.
+Creates `.miniGit`, a `commits` directory, and a config file.
 
 ```bash
 node backend-main/index.js add path/to/file
 ```
 
-Copies a file into `.apnaGit/staging`.
+Copies a file into `.miniGit/staging`.
 
 ```bash
 node backend-main/index.js commit "your commit message"
 ```
 
-Creates a UUID commit folder under `.apnaGit/commits` and stores staged files plus commit metadata.
+Creates a UUID commit folder under `.miniGit/commits` and stores staged files plus commit metadata.
 
 ```bash
 node backend-main/index.js push
@@ -225,7 +227,7 @@ Uploads commit folders to the configured S3 bucket.
 node backend-main/index.js pull
 ```
 
-Downloads commit objects from S3 back into the local `.apnaGit` structure.
+Downloads commit objects from S3 back into the local `.miniGit` structure.
 
 ```bash
 node backend-main/index.js revert commit-id

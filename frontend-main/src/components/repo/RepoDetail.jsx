@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import Navbar from "../Navbar";
@@ -174,6 +174,7 @@ const RepoDetail = () => {
                       </div>
                     )}
                   </div>
+                )}
                 {activeTab === "issues" && (
                   <div className="repo-issues-section">
                     <div className="issues-grid-layout">

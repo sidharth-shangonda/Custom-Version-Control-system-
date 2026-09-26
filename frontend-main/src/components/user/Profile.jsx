@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./profile.css";
@@ -33,6 +33,12 @@ const Profile = () => {
         setRepositories(repoRes.data.repositories || []);
       } catch (err) {
         console.error("Cannot fetch profile details: ", err);
+        if (err.response?.status === 404 || err.response?.status === 400) {
+          localStorage.removeItem("token");
+          localStorage.removeItem("userId");
+          setCurrentUser(null);
+          navigate("/auth");
+        }
       } finally {
         setLoading(false);
       }

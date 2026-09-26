@@ -26,6 +26,8 @@ async function createRepository(req, res) {
 
     const result = await newRepository.save();
 
+    await User.findByIdAndUpdate(owner, { $push: { repositories: result._id } });
+
     res.status(201).json({
       message: "Repository created!",
       repositoryID: result._id,
@@ -150,6 +152,11 @@ async function deleteRepositoryById(req, res) {
     if (!repository) {
       return res.status(404).json({ error: "Repository not found!" });
     }
+
+    if (repository.owner) {
+      await User.findByIdAndUpdate(repository.owner, { $pull: { repositories: id } });
+    }
+    await Issue.deleteMany({ repository: id });
 
     res.json({ message: "Repository deleted successfully!" });
   } catch (err) {

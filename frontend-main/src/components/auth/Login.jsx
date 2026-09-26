@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../authContext";
@@ -48,7 +48,7 @@ const Login = () => {
           <img className="auth-logo" src={logo} alt="GitHub Logo" />
         </div>
 
-        <h2 className="auth-title">Sign in to ApnaGit</h2>
+        <h2 className="auth-title">Sign in to MiniGit</h2>
 
         {error && <div className="auth-error-banner">{error}</div>}
 
@@ -110,7 +110,7 @@ const Login = () => {
 
         <div className="auth-redirect-box">
           <p>
-            New to ApnaGit? <Link to="/signup" className="auth-link">Create an account</Link>
+            New to MiniGit? <Link to="/signup" className="auth-link">Create an account</Link>
           </p>
         </div>
       </div>

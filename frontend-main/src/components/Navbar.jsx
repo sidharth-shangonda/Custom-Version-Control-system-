@@ -1,3 +1,4 @@
+import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import logo from "../assets/github-mark-white.svg";
 import "./navbar.css";
@@ -10,7 +11,7 @@ const Navbar = () => {
       <div className="navbar-container">
         <Link to="/" className="navbar-brand">
           <img src={logo} alt="GitHub Logo" className="navbar-logo" />
-          <span className="navbar-title">ApnaGit</span>
+          <span className="navbar-title">MiniGit</span>
         </Link>
         <nav className="navbar-links">
           <Link 

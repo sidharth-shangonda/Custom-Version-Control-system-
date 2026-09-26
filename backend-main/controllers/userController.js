@@ -23,7 +23,7 @@ async function signup(req, res) {
   const { username, password, email } = req.body;
   try {
     await connectClient();
-    const db = client.db("githubclone");
+    const db = client.db();
     const usersCollection = db.collection("users");
 
     const user = await usersCollection.findOne({ username });
@@ -46,11 +46,11 @@ async function signup(req, res) {
     const result = await usersCollection.insertOne(newUser);
 
     const token = jwt.sign(
-      { id: result.insertId },
+      { id: result.insertedId },
       process.env.JWT_SECRET_KEY,
       { expiresIn: "1h" }
     );
-    res.json({ token, userId: result.insertId });
+    res.json({ token, userId: result.insertedId });
   } catch (err) {
     console.error("Error during signup : ", err.message);
     res.status(500).send("Server error");
@@ -61,7 +61,7 @@ async function login(req, res) {
   const { email, password } = req.body;
   try {
     await connectClient();
-    const db = client.db("githubclone");
+    const db = client.db();
     const usersCollection = db.collection("users");
 
     const user = await usersCollection.findOne({ email });
@@ -87,7 +87,7 @@ async function login(req, res) {
 async function getAllUsers(req, res) {
   try {
     await connectClient();
-    const db = client.db("githubclone");
+    const db = client.db();
     const usersCollection = db.collection("users");
 
     const users = await usersCollection.find({}).toArray();
@@ -103,7 +103,7 @@ async function getUserProfile(req, res) {
 
   try {
     await connectClient();
-    const db = client.db("githubclone");
+    const db = client.db();
     const usersCollection = db.collection("users");
 
     const user = await usersCollection.findOne({
@@ -127,7 +127,7 @@ async function updateUserProfile(req, res) {
 
   try {
     await connectClient();
-    const db = client.db("githubclone");
+    const db = client.db();
     const usersCollection = db.collection("users");
 
     let updateFields = { email };
@@ -160,7 +160,7 @@ async function deleteUserProfile(req, res) {
 
   try {
     await connectClient();
-    const db = client.db("githubclone");
+    const db = client.db();
     const usersCollection = db.collection("users");
 
     const result = await usersCollection.deleteOne({

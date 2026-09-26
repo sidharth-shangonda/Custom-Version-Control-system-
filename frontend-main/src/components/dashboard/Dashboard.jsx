@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import Navbar from "../Navbar";
@@ -152,7 +152,7 @@ const Dashboard = () => {
                       {repo.description || "No description provided."}
                     </p>
                     <div className="repo-card-footer">
-                      <div className="repo-stat" title="Number of files tracked by .apnaGit in this repository">
+                      <div className="repo-stat" title="Number of files tracked by .miniGit in this repository">
                         <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor">
                           <path d="M4 1.75C4 .784 4.784 0 5.75 0h4.5C11.216 0 12 .784 12 1.75v12.5A1.75 1.75 0 0 1 10.25 16h-4.5A1.75 1.75 0 0 1 4 14.25V1.75zM5.75 1.5a.25.25 0 0 0-.25.25v12.5c0 .138.112.25.25.25h4.5a.25.25 0 0 0 .25-.25V1.75a.25.25 0 0 0-.25-.25h-4.5z"/>
                         </svg>
